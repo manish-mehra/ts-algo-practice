@@ -43,3 +43,5 @@ const sol = new Solution()
 const encoded = sol.Encode(test3)
 const decoded = sol.Decode(encoded)
 console.log(decoded)
+
+export {}
