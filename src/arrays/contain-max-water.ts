@@ -24,3 +24,4 @@ function maxArea(height: number[]): number {
 
 const test1 = [1,8,6,2,5,4,8,3,7]
 console.log(maxArea(test1))
+export {}
