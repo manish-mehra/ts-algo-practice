@@ -1,3 +1,4 @@
+import { ListNode } from "./main"
 function printNodes(head: ListNode):void{
   let output = []
   while(head !== null){
@@ -9,16 +10,6 @@ function printNodes(head: ListNode):void{
     }
   }
   console.log(output)
-}
-
-// Definition for singly-linked list.
-class ListNode {
-  val: number
-  next: ListNode | null
-  constructor(val?: number, next?: ListNode | null) {
-      this.val = (val===undefined ? 0 : val)
-      this.next = (next===undefined ? null : next)
-  }
 }
 
 
