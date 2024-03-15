@@ -1,7 +1,7 @@
 // Sinly linked list
 
-class Node<T> {
-  value: T | null = null
+export class Node<T> {
+  value: T
   next: Node<T | null> | null= null
 
   constructor(value: T, next: Node<T | null> | null = null) {
