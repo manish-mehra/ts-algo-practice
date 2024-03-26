@@ -9,7 +9,7 @@
  }
 }
 
-function traverse(head:ListNode | null){
+export function traverse(head:ListNode | null){
 const arr = []
 while(head !== null){
 arr.push(head.val)
