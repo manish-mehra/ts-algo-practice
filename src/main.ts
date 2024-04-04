@@ -1,39 +1,164 @@
-import { ListNode, printNodes } from "./linked-list/utils"
+// design a tree
+/**
+ 1. tree definition ✅
+ 2. Insert
+ 3. Search 
+ 4. Traverse
+   1. preorder
+   2. inorder
+   3. postorder
+ 5. delete
+ 6. height
 
-// Linked List Techniques
-// 1. Two pointers ✅
-// 2. Fast & slow ✅
-// 3. Linked List reversal: iterative && recursive
+ */
 
 
-function reverseListIterative(head: ListNode): ListNode | null{
-
-  let prev = null
-  while(head !== null){
-    let temp = head.next
-    head.next = prev
-    prev = head
-    head = temp!
+//  Definition for a binary tree node.
+class TreeNode {
+    val: number
+    left: TreeNode | null
+    right: TreeNode | null
+    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+        this.val = (val===undefined ? 0 : val)
+        this.left = (left===undefined ? null : left)
+        this.right = (right===undefined ? null : right)
   }
-
-  return prev
 }
 
-function reverseListRecurse(head: ListNode | null){
-
-  // base case
-  if(!head){
-    return
+class Tree{
+  root: TreeNode
+  constructor(root: TreeNode){
+    this.root = root
   }
-  reverseListRecurse(head.next)
-  console.log(head.val)
+
+  insert(node: TreeNode | null, parent: TreeNode | null){   
+    
+    if(parent === null){
+      parent = node
+      return
+    }
+    // base cases
+    if(node && node.val < parent.val && parent.left === null){
+      parent.left = node
+      return
+    } else  if(node && node.val > parent.val && parent.right === null) {
+      parent.right = node
+      return 
+    }
+    // recursive cases
+    if(node && node.val < parent.val) {
+      parent.left  &&  this.insert(node, parent.left)
+    } else if(node && node.val > parent.val){
+      parent.right && this.insert(node, parent.right)
+    }
+  }
+
+  search(value: number, current: TreeNode = this.root):boolean{
+    // base case
+    if(value === current.val){
+      return true
+    }
+    // recursive case
+    if(value < current.val && current.left){
+      return this.search(value,current.left )
+    } else if(current.right && value > current.val){
+      return this.search(value, current.right)
+    }
+    return false
+  }
+  traversePreOrder(root: TreeNode | null = this.root):number[]{
+    const result: number[] = []
+    function traverse(root: TreeNode | null){
+      if(!root) return
+      result.push(root.val)
+      traverse(root.left)
+      traverse(root.right)
+    }
+    traverse(root)
+    return result
+  }
+
+  traverseInOrder(root: TreeNode | null = this.root){
+    const result: number[] = []
+    function traverse(root: TreeNode | null){
+      if(!root) return
+      traverse(root.left)
+      result.push(root.val)
+      traverse(root.right)
+    }
+    traverse(root)
+    return result
+  }
+
+  traversePostOrder(root: TreeNode | null): number[] {
+    const result: number[] = []
+    function traverse(root: TreeNode | null){
+        if(!root) return
+        traverse(root.left)
+        traverse(root.right)
+        result.push(root.val)
+    }
+    traverse(root)
+    return result
+  }
+  delete(){}
 }
 
 
-const node5 = new ListNode(5, null)
-const node4 = new ListNode(4, node5)
-const node3 = new ListNode(3, node4)
-const node2 = new ListNode(2, node3)
-const node1 = new ListNode(1, node2)
+// Create the nodes
+let node50 = new TreeNode(50)
+let node30 = new TreeNode(30)
+let  node70 = new TreeNode(70)
+const node20 = new TreeNode(20)
+const node40 = new TreeNode(40)
+const node60 = new TreeNode(60)
+const node80 = new TreeNode(80)
+const node10 = new TreeNode(10)
+// Create the tree
+const tree = new Tree(node50)
 
-reverseListRecurse(node1)
+// Insert the nodes into the tree (demonstrates recursive behavior)
+tree.insert(node30, tree.root) // Initial insertion uses the root as parent
+tree.insert(node70, tree.root)
+tree.insert(node20, node30)
+tree.insert(node40, node30)
+tree.insert(node60, node70)
+tree.insert(node80, node70)
+tree.insert(node10, node20)
+
+function printBinaryTree(root: TreeNode | null) {
+  const lines: string[] = [];
+
+  const printNode = (node: TreeNode | null, prefix: string, isLeft: boolean) => {
+    if (node === null) {
+      return;
+    }
+
+    const newPrefix = isLeft ? `${prefix}│   ` : `${prefix}    `;
+    lines.push(`${prefix}${isLeft ? '├──' : '└──'}${node.val}`);
+
+    printNode(node.left, newPrefix, true);
+    printNode(node.right, newPrefix, false);
+  };
+
+  printNode(root, '', false);
+  console.log(lines.join('\n'));
+}
+
+printBinaryTree(node50)
+
+function invertBinary(root: TreeNode | null){
+  if(!root) return
+  
+  let temp = root.left
+  root.left  = root.right
+  root.right = temp
+
+  invertBinary(root.left)
+  invertBinary(root.right)
+}
+
+invertBinary(node50)
+printBinaryTree(node50)
+
+export {}
