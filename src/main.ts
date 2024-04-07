@@ -12,6 +12,8 @@
 
  */
 
+import { printBinaryTree } from "./tree"
+
 
 //  Definition for a binary tree node.
 class TreeNode {
@@ -126,39 +128,51 @@ tree.insert(node60, node70)
 tree.insert(node80, node70)
 tree.insert(node10, node20)
 
-function printBinaryTree(root: TreeNode | null) {
-  const lines: string[] = [];
+printBinaryTree(node50)
 
-  const printNode = (node: TreeNode | null, prefix: string, isLeft: boolean) => {
-    if (node === null) {
-      return;
+function preorderTraversalIterative(root: TreeNode | null): number[] {
+  const result: number[] = [];
+  const stack: TreeNode[] = [];
+
+  if (root !== null) {
+    stack.push(root);
+  }
+
+  while (stack.length > 0) {
+    const node = stack.pop()!;
+    result.push(node.val);
+
+    if (node.right) {
+      stack.push(node.right);
     }
+    if (node.left) {
+      stack.push(node.left);
+    }
+  }
 
-    const newPrefix = isLeft ? `${prefix}│   ` : `${prefix}    `;
-    lines.push(`${prefix}${isLeft ? '├──' : '└──'}${node.val}`);
-
-    printNode(node.left, newPrefix, true);
-    printNode(node.right, newPrefix, false);
-  };
-
-  printNode(root, '', false);
-  console.log(lines.join('\n'));
+  return result;
 }
 
-printBinaryTree(node50)
+function inorderTraversalIterative(root: TreeNode | null): number[] {
+  const result: number[] = [];
+  const stack: TreeNode[] = [];
 
-function invertBinary(root: TreeNode | null){
-  if(!root) return
-  
-  let temp = root.left
-  root.left  = root.right
-  root.right = temp
+  let curr = root;
 
-  invertBinary(root.left)
-  invertBinary(root.right)
+  while (curr || stack.length > 0) {
+    if (curr) {
+      stack.push(curr);
+      curr = curr.left;
+    } else {
+      const node = stack.pop()!;
+      result.push(node.val); 
+      curr = node.right;
+    }
+  }
+
+  return result;
 }
 
-invertBinary(node50)
-printBinaryTree(node50)
 
-export {}
+
+console.log(tree.traversePostOrder(node50))
