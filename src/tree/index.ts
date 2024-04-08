@@ -1,12 +1,12 @@
 // design a tree
 /**
  1. tree definition ✅
- 2. Insert
- 3. Search 
+ 2. Insert✅
+ 3. Search ✅
  4. Traverse
-   1. preorder
-   2. inorder
-   3. postorder
+   1. preorder✅
+   2. inorder✅
+   3. postorder✅
  5. delete
  6. height
 
@@ -143,4 +143,41 @@ export function printBinaryTree(root: TreeNode | null) {
 
   printNode(root, '', false);
   console.log(lines.join('\n'));
+}
+
+export function preorderTraversalIterative(root: TreeNode | null): number[] {
+  if(!root) return []
+  let current: TreeNode | null | undefined = root
+  const result: number[] = []
+  const stack: (TreeNode | null)[] = []
+
+  while(current || stack.length > 0){
+    if(current){
+      result.push(current.val)
+      stack.push(current.right)
+      current = current.left
+    } else {
+      current = stack.pop()
+    }
+  }
+  return result
+}
+
+export function inorderTraversalIterative(root: TreeNode | null): number[] {
+  const result: number[] = []
+  const stack: TreeNode[] = []
+
+  let current = root
+
+  while (current || stack.length > 0) {
+    if (current) {
+      stack.push(current)
+      current = current.left
+    } else {
+      const node = stack.pop()!
+      result.push(node.val)
+      current = node.right
+    }
+  }
+  return result
 }
