@@ -1,7 +1,7 @@
 import { Tree, TreeNode, printBinaryTree } from "./"
 
 
-function levelOrder(root: TreeNode | null): number[][] {
+export function levelOrder(root: TreeNode | null): number[][] {
   const res: number[][] = []
   const q: TreeNode[] = []
 
@@ -30,4 +30,3 @@ function levelOrder(root: TreeNode | null): number[][] {
 
   return res
 }
-export {}
